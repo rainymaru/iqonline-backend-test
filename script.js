@@ -109,7 +109,7 @@ if (!timeDeposit) {
   document.querySelector('.error__result').innerHTML = '';
 }
 
-  const response = await fetch('calc.php', {
+  const response = await fetch('https://rainymaru.github.io/iqonline-backend-test/calc.php', {
     method: 'POST',
     headers: {
     'Content-Type': 'application/json;charset=utf-8'
