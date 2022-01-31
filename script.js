@@ -109,7 +109,7 @@ if (!timeDeposit) {
   document.querySelector('.error__result').innerHTML = '';
 }
 
-  const response = await fetch('https://rainymaru.github.io/iqonline-backend-test/calc.php', {
+  const response = await fetch('calc.php', {
     method: 'POST',
     headers: {
     'Content-Type': 'application/json;charset=utf-8'
@@ -123,93 +123,3 @@ if (!timeDeposit) {
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function validate (reg, input) {
-//   btnClicked.onclick = function(e) {
-//     e.preventDefault();
-//     if (!reg.test(input)) {
-//       console.log('no');
-//      }
-//       else {
-//         console.log ('yes');
-//       }
-//       return
-//     } ;
-// }
-
-// validate(dateValid, formDeposit.date.value)
-
-  
-
-// document.querySelector('.btn').onclick = function(e) {
-//   e.preventDefault();
-//   if (!validate(dateValid, formDeposit.date.value)) {
-//     console.log('no') }
-//     else {
-//       console.log ('yes')
-//     }
-//   }
