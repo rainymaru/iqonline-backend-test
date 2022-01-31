@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="MobileOptimized" content="width">
+    <meta name="HandheldFriendly" content="true">
+    <link rel="stylesheet" href="./styles/normalize.css">
+    <link rel="stylesheet" href="./styles/bootstrap-grid.css">
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <link rel="stylesheet" href="https://snipp.ru/cdn/jqueryui/1.12.1/jquery-ui.min.css">
+    <title>IQ Deposit Calculator</title>
+  </head>
+  <body>
+    <header class="container-fluid header" >
+      <div class="row d-flex justify-content-center">
+        <div class="col-10">
+          <div class="header__info">
+            <div class="header__logo"><a href="#"><img src="./img/logo-light 1.svg" alt="iq dev" /></a></div>
+            <div class="header__title">Deposit Calculator</div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="container-fluid main">
+      <div class="row d-flex justify-content-center">
+        <div class="col-9 main__bg">
+          <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+              <h1 class="main__h1">Депозитный калькулятор</h1>
+            </div>
+            <div class="col-12 d-flex justify-content-center">
+              <p class="main__p">Калькулятор депозитов позволяет рассчитать ваши доходы после внесения суммы на счет в банке по опредленному тарифу.</p>
+            </div>
+          </div>
+          <div class="row d-flex justify-content-center main__deposit-space">
+            <div class="col-8">
+              <form class="form" id="basic-form">
+                <div class="row d-flex justify-content-center">
+                  <div class="col-6 d-flex flex-column">
+                    <input name="date" class="mb-38px main__input" type="text" placeholder="Дата открытия вклада" id="datepicker"/>
+                    <input name="deposit" class="mb-38px main__input" type="text" placeholder="Сумма вклада" />
+                    <label class="mb-38px main__input " ><input name="everyMonth" class="main__click" type="checkbox"/> Ежемесячное пополнение вклада </label>
+                    <input class="mb-64px btn" type="submit" value="Расчитать" />
+                    <div class="error__result"></div>
+                    <div class="result"></div>
+                  </div>
+                  <div class="col-6 d-flex flex-column">
+                    <div class="main__button-auto">
+                  <input name="timeDeposit" class="mb-38pxs main__input" type="text" placeholder="Срок вклада" />
+                  <select name="yearOrMonth"  class="main__sel">
+                    <option value="month">Месяц</option>
+                    <option value="year">Год</option>
+                  </select>
+                  <div style="color: red; margin: 0 auto;" class="text__message"> </div>
+                  </div>
+                      <input name="percent" class="mb-38px main__input" type="text" placeholder="Процентная ставка" />
+                    <input name="depositAddSum" class="mb-38px main__input main__display" type="text" placeholder="Сумма пополнения вклада" />
+                  </div>
+                </div>
+              </form>
+            </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </main>
+    <script defer src="./script.js"></script>
+  <script>
+      /* Локализация datepicker */      
+      $.datepicker.regional['ru'] = {
+      
+        closeText: 'Закрыть',
+      
+        prevText: 'Предыдущий',
+      
+        nextText: 'Следующий',
+      
+        currentText: 'Сегодня',
+      
+        monthNames: ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+      
+        monthNamesShort: ['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'],
+      
+        dayNames: ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'],
+      
+        dayNamesShort: ['вск','пнд','втр','срд','чтв','птн','сбт'],
+      
+        dayNamesMin: ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'],
+      
+        weekHeader: 'Не',
+      
+        dateFormat: 'dd.mm.yy',
+      
+        firstDay: 1,
+      
+        isRTL: false,
+      
+        showMonthAfterYear: false,
+      
+        yearSuffix: ''
+      
+      };
+      
+      $.datepicker.setDefaults($.datepicker.regional['ru']);      
+  </script>
+  <script>
+  $(function(){
+  $("#datepicker").datepicker();
+  });
+  </script>
+  <script>
+  $(document).ready(function() {
+  $("#basic-form").validate({
+    errorClass: "error fail-alert",
+    rules: {
+      date: {
+        itsdate: true,
+      },
+      deposit : {
+        number: true,
+      },
+      timeDeposit: {
+        number: true,
+      },
+      percent: {
+        number: true,
+      },
+      depositAddSum: {
+        number: true,
+      },
+
+    },
+    messages : {
+      deposit: {
+        number: "Пожалуйста, введите числовое значение"
+      },
+      timeDeposit: {
+        number: "Пожалуйста, введите числовое значение"
+      },
+      percent: {
+        number: "Пожалуйста, введите числовое значение"
+      },
+      depositAddSum: {
+        number: "Пожалуйста, введите числовое значение"
+      }
+    }
+  });
+});
+$.validator.addMethod(
+    "itsdate",
+    function(value, element) {
+        return value.match(/^(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](20)[0-9]{2}$/);
+    },
+    "Пожалуйста, введите дату в формате DD.MM.YY"
+);
+  </script>
+  </body>
+</html>
