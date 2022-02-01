@@ -108,7 +108,6 @@ if (!timeDeposit) {
 } else {
   document.querySelector('.error__result').innerHTML = '';
 }
-
   const response = await fetch('calc.php', {
     method: 'POST',
     headers: {
@@ -123,3 +122,93 @@ if (!timeDeposit) {
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function validate (reg, input) {
+//   btnClicked.onclick = function(e) {
+//     e.preventDefault();
+//     if (!reg.test(input)) {
+//       console.log('no');
+//      }
+//       else {
+//         console.log ('yes');
+//       }
+//       return
+//     } ;
+// }
+
+// validate(dateValid, formDeposit.date.value)
+
+  
+
+// document.querySelector('.btn').onclick = function(e) {
+//   e.preventDefault();
+//   if (!validate(dateValid, formDeposit.date.value)) {
+//     console.log('no') }
+//     else {
+//       console.log ('yes')
+//     }
+//   }

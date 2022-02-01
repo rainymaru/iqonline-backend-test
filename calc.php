@@ -20,43 +20,56 @@ if ($_POST["percent"] < 3 || $_POST["percent"] > 100) {
 
 $date = explode(".", $_POST["date"]);
 
+if ((int) $date[1] - 1 === 0) {
+  $prevDay = 12;
+  $year = (int) $date[2] - 1;
+} else {
+  $prevDay = (int) $date[1] - 1;
+  $year = (int) $date[2];
+}
 
   //Количество дней в данном месяце,на которые приходился вклад.
-  $daysCurrentMonth = (int) date("d", mktime(0, 0, 0, $date[0]+1, 1, $date[2]) - 1);
-
-  $daysPrevMonth = (int) date("d", mktime(0, 0, 0, $date[0], 1, $date[2]) - 1);
+  $daysCurrentMonth = cal_days_in_month(CAL_GREGORIAN, (int) $date[1], (int) $date[2]);
+  //Количество дней в прошлом месяце.
+  $daysPrevMonth = cal_days_in_month(CAL_GREGORIAN, $prevDay, $year);
 
 //Количество дней в году
   $daysYear = 365 + (int) checkdate(2, 29, $date[2]);
 
   //Сумма на счете на N месяц (рублей)
-  $sumn = $_POST['deposit'];
+  $deposit = $_POST['deposit'];
 
   //Проверка на ежемесячное пополнение и присвоение значения в случае если checkbox = on
-  if ($data["everyMonth"] === "on") {
-    $depositAdd = $data["depositAddSum"];
+  if ($_POST["everyMonth"] === "on") {
+    $depositAdd = (int) $_POST["depositAddSum"];
   } else {
-    $depositAdd = 0;
+    $depositAdd = 1;
   }
 
   //Ставка банка от 3 до 100
   $percent = (int) $_POST['percent'];
   $depositMonth = (int) $_POST['timeDeposit'];
   if($_POST['yearOrMonth'] === 'year') {
-    $depositMonth = (int) $_POST['timeDeposit']*12;
+    $depositMonth = (int) $_POST['timeDeposit'] * 12;
   }
 
-  echo $depositMonth;
-$result = $sumn + ($sumn-1 + $depositAdd) * $daysCurrentMonth * (($percent / $daysYear)* $depositMonth);
+$prevResult = $deposit * ($daysCurrentMonth * ($percent/ $daysYear));
+for ($i = 0; $i < $depositMonth - 1; $i++) {
+  if ((int) $date[1] + 1 === 13) {
+    $nextDate = 1;
+    $yearInFor = (int) $date[2] + 1;
+  } else {
+    $nextDate = (int) $date[1] + 1;
+    $yearInFor = (int) $date[2];
+  }
 
-echo round($result, 2);
+  $daysCurrentMonthinFor = cal_days_in_month(CAL_GREGORIAN, $nextDate, $yearInFor);
+  $result += ($prevResult + ($prevResult + $depositAdd)) * ($daysCurrentMonthinFor * ($percent / $daysYear));
+}
 
+if ((int) $depositMonth === 1) {
+  echo round($prevResult, 0);
+} else {
+  echo round($result, 0);
+}
 
-//sumN = sumN-1 + (sumN-1 + sumAdd) * daysN * (percent / daysY)
-
-// sumN – сумма на счете на N месяц (руб)
-// sumN-1 – сумма на счете на конец прошлого месяца
-// sumAdd – сумма ежемесячного пополнения
-// daysN – количество дней в данном месяце, на которые приходился вклад
-// percent – процентная ставка банка
-// daysY – количество дней в году
