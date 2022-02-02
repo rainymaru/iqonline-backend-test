@@ -53,7 +53,8 @@ if ((int) $date[1] - 1 === 0) {
     $depositMonth = (int) $_POST['timeDeposit'] * 12;
   }
 
-$prevResult = $prevResult = $deposit + $depositAdd * ($daysYear * (1 + $percent / $daysCurrentMonth));
+$prevResult = $deposit * $daysCurrentMonth * ($percent/$daysYear);
+
 for ($i = 0; $i < $depositMonth - 1; $i++) {
   if ((int) $date[1] + 1 === 13) {
     $nextDate = 1;
